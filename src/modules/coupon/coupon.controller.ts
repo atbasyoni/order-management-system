@@ -11,31 +11,31 @@ export class CouponController {
 
     @ApiOperation({ summary: "Add new coupon" })
     @Post()
-    createcoupon(@Body() createCouponDto: CreateCouponDto) {
-        return this.couponService.createCoupon(createCouponDto);
+    async createCoupon(@Body() createCouponDto: CreateCouponDto) {
+        return await this.couponService.createCoupon(createCouponDto);
     }
 
     @ApiOperation({ summary: "Get specific coupon by id" })
     @Get(':couponId')
-    getcouponById(@Param('couponId') couponId: string) {
-        return this.couponService.getCouponById(couponId);
+    async getcouponById(@Param('couponId') couponId: string) {
+        return await this.couponService.getCouponById(couponId);
     }
 
     @ApiOperation({ summary: "Retrieves all coupons" })
     @Get()
-    getAllcoupons() {
-        return this.couponService.getAllCoupons();
+    async getAllcoupons() {
+        return await this.couponService.getAllCoupons();
     }
 
     @ApiOperation({ summary: "Update coupon" })
-    @Put('update/:couponId')
-    updatecoupon(@Param('couponId') couponId: string, @Body() updateCouponDto: UpdateCouponDto) {
-        return this.couponService.updateCoupon(couponId, updateCouponDto);
+    @Put(':couponId')
+    async updatecoupon(@Param('couponId') couponId: string, @Body() updateCouponDto: UpdateCouponDto) {
+        return await this.couponService.updateCoupon(couponId, updateCouponDto);
     }
 
     @ApiOperation({ summary: "Delete coupon" })
-    @Delete('delete/:couponId')
-    deletecoupon(@Param('couponId') couponId: string) {
-        return this.couponService.deleteCoupon(couponId);
+    @Delete(':couponId')
+    async deletecoupon(@Param('couponId') couponId: string) {
+        return await this.couponService.deleteCoupon(couponId);
     }
 }

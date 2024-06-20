@@ -1,51 +1,35 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class UserService {
-    constructor(private prisma: PrismaService) {}
+    constructor(private prisma: PrismaService) { }
 
-    create(createUserDto: CreateUserDto) {
-    return this.prisma.user.create({
-        data: createUserDto,
-    });
-    }
+    async create(createUserDto: CreateUserDto) {
+        const { name, email, password, address } = createUserDto;
 
-    findAll() {
-        return this.prisma.user.findMany();
-    }
-
-    findOne(id: string) {
-        return this.prisma.user.findUnique({
-            where: { id: id },
+        const user = await this.prisma.user.create({
+            data: { name, email, password, address },
         });
-    }
 
-    update(id: string, updateUserDto: UpdateUserDto) {
-        return this.prisma.user.update({
-            where: { id: id },
-            data: updateUserDto,
-        });
-    }
-
-    remove(id: string) {
-        return this.prisma.user.delete({
-            where: { id: id },
-        });
-    }
-
-    getOrderHistory(userId: string) {
-        return this.prisma.order.findMany({
-          where: { userId: userId },
-          include: {
-            orderProducts: {
-              include: {
-                product: true,
-              },
+        this.prisma.cart.create({
+            data: {
+                userId: user.id,
             },
-          },
+        });
+
+        return user;
+    }
+
+    async findAll() {
+        return await this.prisma.user.findMany();
+    }
+
+    async getOrderHistory(userId: string) {
+        return await this.prisma.order.findMany({
+            where: { userId: userId },
+            include: { orderProducts: { include: { product: true } } }
         });
     }
 }

@@ -1,5 +1,4 @@
-import { Order } from "@prisma/client";
-import { Coupon } from "./coupon.entity";
+import { Coupon, Order } from "@prisma/client";
 
 export class OrderCoupon {
     id: string;

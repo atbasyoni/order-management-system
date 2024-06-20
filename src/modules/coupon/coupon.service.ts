@@ -6,12 +6,12 @@ import { UpdateCouponDto } from './dto/update-coupon.dto';
 
 @Injectable()
 export class CouponService {
-    constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) {}
 
-  createCoupon(createCouponDto: CreateCouponDto) {
+  async createCoupon(createCouponDto: CreateCouponDto) {
     const expiryDate = new Date(createCouponDto.expiryDate);
 
-    return this.prisma.coupon.create({
+    return await this.prisma.coupon.create({
       data: {
         code: createCouponDto.code,
         discount: createCouponDto.discount,
@@ -20,25 +20,25 @@ export class CouponService {
     });
   }
 
-  getCouponById(couponId: string) {
-    return this.prisma.coupon.findUnique({
+  async getCouponById(couponId: string) {
+    return await this.prisma.coupon.findUnique({
       where: { id: couponId },
     });
   }
 
-  getAllCoupons() {
-    return this.prisma.coupon.findMany();
+  async getAllCoupons() {
+    return await this.prisma.coupon.findMany();
   }
 
-  updateCoupon(CouponId: string, updateCouponDto: UpdateCouponDto) {
-    return this.prisma.coupon.update({
+  async updateCoupon(CouponId: string, updateCouponDto: UpdateCouponDto) {
+    return await this.prisma.coupon.update({
       where: { id: CouponId },
       data: updateCouponDto,
     });
   }
 
-  deleteCoupon(couponId: string) {
-    return this.prisma.coupon.delete({
+  async deleteCoupon(couponId: string) {
+    return await this.prisma.coupon.delete({
       where: { id: couponId },
     });
   }

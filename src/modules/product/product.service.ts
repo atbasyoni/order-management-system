@@ -12,8 +12,7 @@ export class ProductService {
     const { title, description, price, stock, image } = createProductDto;
 
     return await this.prisma.product.create({
-      data: { title, description, price, stock, image
-      },
+      data: { title, description, price, stock, image},
     });
   }
 
@@ -46,13 +45,7 @@ export class ProductService {
 
     const updatedProduct = await this.prisma.product.update({
       where: { id: productId },
-      data: {
-        title,
-        description,
-        price,
-        stock,
-        image,
-      },
+      data: { title, description, price, stock, image },
     });
 
     return updatedProduct;

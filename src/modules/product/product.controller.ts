@@ -28,13 +28,13 @@ export class ProductController {
     }
 
     @ApiOperation({ summary: "Update product" })
-    @Put('update/:productId')
+    @Put(':productId')
     updateProduct(@Param('productId') productId: string, @Body() updateProductDto: UpdateProductDto) {
         return this.productService.updateProduct(productId, updateProductDto);
     }
 
     @ApiOperation({ summary: "Delete product" })
-    @Delete('delete/:productId')
+    @Delete(':productId')
     deleteProduct(@Param('productId') productId: string) {
         return this.productService.deleteProduct(productId);
     }
