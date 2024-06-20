@@ -53,11 +53,6 @@ $ npm run start:dev
   - `DELETE /api/products/delete/{productId}`
     - Delete product.
    
-
-- Get Order History
-  - `PUT /api/users/{userId}/orders`
-    - Retrieve order history for specific user.
-
 ### Orders
 
 - Place Order
@@ -94,6 +89,24 @@ $ npm run start:dev
   - `PUT /api/cart/remove`
     - Remove a product from the cart.
 
-## License
+### Coupons
 
-Nest is [MIT licensed](LICENSE).
+- Add Coupon
+  - `POST /api/coupons`
+    - Add new coupon.
+  
+- Get Coupons
+  - `GET /api/coupons`
+    - Retrieve all products.
+
+- Get Coupon By Id
+  - `GET /api/coupons/{couponId}`
+    - Get specific coupon by id.
+  
+- Update Coupon
+  - `PUT /api/coupons/{couponId}`
+    - Update product.
+
+- Delete Coupon
+  - `DELETE /api/coupons/{couponId}`
+    - Delete coupon.
