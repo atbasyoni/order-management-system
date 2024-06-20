@@ -24,7 +24,7 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+This repository contains the implementation of an Order Management System (OMS). The project utilizes NestJS for the backend framework, Prisma as the ORM, and PostgreSQL for the database. The system includes essential functionalities such as user management, product management, cart operations, and order processing.
 
 ## Installation
 
@@ -58,16 +58,65 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
-## Support
+## Routes
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+### Products
 
-## Stay in touch
+- Add Product
+  - `POST /api/products`
+    - Add new product.
+  
+- Get Products
+  - `GET /api/products`
+    - Retrieve all products.
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+- Get Product
+  - `GET /api/products/{productId}`
+    - Get specific product by id.
+  
+- Update Product
+  - `PUT /api/products/update/{productId}`
+    - Update product.
 
+- Delete Product
+  - `DELETE /api/products/delete/{productId}`
+    - Delete product.
+   
+
+- Get Order History
+  - `PUT /api/users/{userId}/orders`
+    - Retrieve order history for specific user.
+
+### Users
+
+- Add User
+  - `POST /api/users`
+    - Add new user.
+  
+- Get Users
+  - `GET /api/users`
+    - Get all users.
+   
+
+- Get User
+  - `GET /api/users/{id}`
+    - Get specific user by id.
+   
+  
+- Update User
+  - `PUT /api/users/{id}`
+    - Update User.
+   
+
+- Delete User
+  - `DELETE /api/users/{id}`
+    - Delete User.
+   
+
+- Get Order History
+  - `PUT /api/users/{userId}/orders`
+    - Retrieve order history for specific user.
+  
 ## License
 
 Nest is [MIT licensed](LICENSE).
