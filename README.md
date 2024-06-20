@@ -1,27 +1,3 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
-
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
-
 ## Description
 
 This repository contains the implementation of an Order Management System (OMS). The project utilizes NestJS for the backend framework, Prisma as the ORM, and PostgreSQL for the database. The system includes essential functionalities such as user management, product management, cart operations, and order processing.
@@ -35,30 +11,25 @@ $ npm install
 ## Running the app
 
 ```bash
-# development
-$ npm run start
-
 # watch mode
 $ npm run start:dev
-
-# production mode
-$ npm run start:prod
-```
-
-## Test
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
 ```
 
 ## Routes
+
+### Users
+
+- Add User
+  - `POST /api/users`
+    - Add new user.
+  
+- Get Users
+  - `GET /api/users`
+    - Get all users.
+
+- Get Order History
+  - `PUT /api/users/{userId}/orders`
+    - Retrieve order history for specific user.
 
 ### Products
 
@@ -87,36 +58,42 @@ $ npm run test:cov
   - `PUT /api/users/{userId}/orders`
     - Retrieve order history for specific user.
 
-### Users
+### Orders
 
-- Add User
-  - `POST /api/users`
-    - Add new user.
+- Place Order
+  - `POST /api/orders/{userId}`
+    - Create a new order for the specific user with the products in their cart.
   
-- Get Users
-  - `GET /api/users`
-    - Get all users.
-   
+- Get Order By Id
+  - `GET /api/orders/{orderId}`
+    - Retrieve the order details by order ID.
 
-- Get User
-  - `GET /api/users/{id}`
-    - Get specific user by id.
+- Update Order Status 
+  - `PUT /api/orders/{orderId}/status`
+    - Update order status by order ID.
    
+- Apply Coupon
+  - `PUT /api/orders/{orderId}/apply-coupon`
+    - Apply discounts and coupons to orders.
+
+### Cart
+
+- Add Product to Cart
+  - `POST /api/cart/add`
+    - Add product to the cart or updates the quantity if the product is already in cart.
   
-- Update User
-  - `PUT /api/users/{id}`
-    - Update User.
-   
+- View Cart
+  - `GET /api/cart/{userId}`
+    - Retrieve the user's cart.
 
-- Delete User
-  - `DELETE /api/users/{id}`
-    - Delete User.
+- Update Cart 
+  - `PUT /api/cart/update`
+    - Update the quantity of product in cart.
    
+- Remove From Cart 
+  - `PUT /api/cart/remove`
+    - Remove a product from the cart.
 
-- Get Order History
-  - `PUT /api/users/{userId}/orders`
-    - Retrieve order history for specific user.
-  
 ## License
 
 Nest is [MIT licensed](LICENSE).
