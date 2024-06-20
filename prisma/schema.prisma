@@ -1,0 +1,120 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String    @id @default(cuid())
+  name      String
+  email     String    @unique
+  phone     String?   @unique
+  password  String
+  address   String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  cart      Cart?
+  orders    Order[]
+
+  @@index([email, phone])
+}
+
+model Product {
+  id            String    @id @default(cuid())
+  title         String    @unique
+  description   String?
+  price         Float
+  stock         Int
+  image         String
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  orderProducts OrderProduct[]
+  cartProducts   CartProduct[]
+
+  @@index([title])
+}
+
+model Cart {
+  id            String    @id @default(cuid())
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId        String   @unique
+  cartProducts  CartProduct[]
+}
+
+model CartProduct {
+  id        String    @id @default(cuid())
+  cart      Cart      @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  cartId    String
+  product   Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId String
+  quantity  Int
+
+  @@unique([cartId, productId])
+  @@index([cartId])
+  @@index([productId])
+}
+
+model Order {
+  id              String    @id @default(cuid())
+  orderDate       DateTime  @default(now())
+  status          OrderStatus @default(Pending)
+  user            User      @relation(fields: [userId], references: [id])
+  userId          String
+  orderProducts   OrderProduct[]
+  orderCoupons    OrderCoupon[]
+  total           Float
+  updatedAt       DateTime    @updatedAt
+
+  @@index([userId])
+}
+
+model OrderProduct {
+  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  orderId   String
+  product   Product @relation(fields:[productId], references:[id], onDelete: Cascade)
+  productId String
+  quantity  Int
+  price     Float
+  total     Float
+
+  @@id([orderId, productId])
+  @@index([orderId])
+  @@index([productId])
+}
+
+model Coupon {
+  id          String  @id @default(cuid())
+  code        String  @unique
+  discount    Float
+  expiryDate  DateTime
+  OrderCoupon OrderCoupon[]
+}
+
+model OrderCoupon {
+  id        String  @id @default(cuid())
+  orderId   String
+  order     Order   @relation(fields: [orderId], references:[id])
+  couponId  String
+  coupon    Coupon  @relation(fields: [couponId], references:[id])
+
+  @@unique([orderId, couponId])
+  @@index([orderId])
+  @@index([couponId])
+}
+
+enum OrderStatus {
+  Pending
+  Completed
+  Canceled
+  Shipped
+  Delivered
+}
